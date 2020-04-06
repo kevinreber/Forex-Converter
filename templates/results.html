@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Results{% endblock %}
+
+{% block content %}
+
+<main class="container">
+    <h1>Results</h1>
+
+    <form action="/" class="container">
+        <h3>{{ sym1 }} {{ amount }} equals: </h3>
+        <h3>{{ sym2 }} {{ convert}}</h3>
+
+        <button class="btn btn-outline-success">Reset</button>
+    </form>
+</main>
+{% endblock %}

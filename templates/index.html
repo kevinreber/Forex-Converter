@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Forex Converter{% endblock %}
+
+{% block content %}
+
+<main class="container">
+    <h1>Forex Converter</h1>
+
+    <div class="msg">
+        <!-- Messages -->
+    </div>
+
+    <form action="/convert" class="container">
+        <div class="form-group">
+            <label for="cur1">Convert From:</label>
+            <input class="form-control" type="text" placeholder="Ex: USD, EUR, JPY..." name="cur1">
+        </div>
+        <div class="form-group">
+            <label for="cur2">Convert To:</label>
+            <input class="form-control" type="text" placeholder="Ex: GBP, AUD, CAD..." name="cur2">
+        </div>
+        <div class="form-group">
+            <label for="amount">Amount</label>
+            <input class="form-control" type="number" step="0.01" pattern="^\d*(\.\d{0,2})?$"
+                placeholder="Ex: 50.00, 10.50, 12.34..." name="amount">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-success" type="submit">Submit</button>
+            <button class="btn btn-outline-success" type="reset">Reset</button>
+        </div>
+    </form>
+</main>
+{% endblock %}
