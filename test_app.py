@@ -46,13 +46,30 @@ class FlaskTests(TestCase):
             self.assertIn('<h3>US$ 1.0 equals: </h3>', html)
             self.assertIn('<h3>US$ 1.0</h3>', html)
 
-    def test_convert_invalid(self):
-        """Tests if user attempts to convert invalid data"""
+    def test_convert_invalid_status_code(self):
+        """Tests status code returned if user attempts to convert invalid data"""
 
         with self.client:
-            """Invalid currency should return 500 status response"""
-            response = self.client.get("/convert?cur1=www&cur2=http&amount=1")
+            response = self.client.get(
+                "/convert?cur1=www&cur2=http&amount=1")
+
+            # Test Response
+            self.assertEqual(response.status_code, 302)
+
+    def test_convert_invalid(self):
+        """Tests redirect if user attempts to convert invalid data"""
+
+        with self.client:
+            response = self.client.get(
+                "/convert?cur1=www&cur2=http&amount=1", follow_redirects=True)
             html = response.get_data(as_text=True)
 
             # Test Response
-            self.assertEqual(response.status_code, 500)
+            self.assertEqual(response.status_code, 200)
+
+            # Test HTML
+            self.assertIn('<p class="p-2 m-2">Input not valid</p>', html)
+            self.assertIn('<h1>Forex Converter</h1>', html)
+            self.assertIn('<label for="cur1">Convert From:</label>', html)
+            self.assertIn('<label for="cur2">Convert To:</label>', html)
+            self.assertIn('<label for="amount">Amount</label>', html)
