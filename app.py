@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, redirect, flash
-from forex_python.converter import CurrencyRates, CurrencyCodes
+from forex_python.converter import CurrencyRates, CurrencyCodes, RatesNotAvailableError
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "abc123"
@@ -31,7 +31,7 @@ def calc_page():
         """Try to convert user inputs"""
         convert = round(c.convert(cur1, cur2, amount), 2)
 
-    except:
+    except RatesNotAvailableError:
         """If fails redirected to homescreen"""
         flash('Input not valid', 'danger')
         return redirect("/")
